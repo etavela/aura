@@ -1,6 +1,6 @@
 const { handler } = require("./index");
 
-describe("basic tests", () => {
+describe("integration tests", () => {
   test("handler function exists", () => {
     expect(typeof handler).toBe("function");
   });
