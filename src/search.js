@@ -12,8 +12,8 @@ function build() {
   initializeIndexes();
 
   function initializeIndexes() {
-    indexValues(ZIP_INDEX, zipCode => zipCode.zip);
-    indexValues(CITY_INDEX, zipCode => zipCode.primary_city);
+    indexValues(ZIP_INDEX, zipCode => [zipCode.zip]);
+    indexValues(CITY_INDEX, zipCode => [zipCode.primary_city]);
     const acceptableCitySelector = zipCode => 
       zipCode.acceptable_cities
       ? zipCode.acceptable_cities.split(",").map(city => city.trim())
