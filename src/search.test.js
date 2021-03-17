@@ -2,7 +2,7 @@ const { handler } = require("./index");
 const builder = require("./search");
 
 describe("search", () => {
-  const search = builder.build();
+  const search = builder.build({MINIMUM_INDEXED_LENGTH: 3});
   describe("byIndex()", () => {
     describe("on zip code", () => {
       test("should return an exact match", () => {

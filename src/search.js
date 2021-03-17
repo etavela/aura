@@ -3,7 +3,7 @@ const zipCodes = require("./data.json");
 const ZIP_INDEX = "zip";
 const CITY_INDEX = "city";
 
-function build() {
+function build(configuration) {
   const indexes = {
     zip: {},
     city: {}
@@ -25,20 +25,40 @@ function build() {
     for (const zipCode of zipCodes) {
       const values = selector(zipCode);
       for (const value of values) {
-        indexValue(indexName, value, zipCode, true);
+        indexValue(indexName, value, zipCode);
       }
     }
   }
 
-  function indexValue(indexName, value, zipCode, exact) {
+  function indexValue(indexName, value, zipCode) {
     const index = indexes[indexName];
+    addIndexEntry(index, value, zipCode, true)
+    const parts = getParts(value)
+    for (const part of parts) {
+      addIndexEntry(index, part, zipCode, false)
+    }
+  }
+
+  function getParts(value) {
+    const parts = []
+    let partLength = value.length - 1
+    while (partLength >= configuration.MINIMUM_INDEXED_LENGTH) {
+      for (let partIndex = 0; partIndex + partLength <= value.length; partIndex++) {
+        parts.push(value.substr(partIndex, partLength))
+      }
+      partLength--
+    }
+    return parts
+  }
+
+  function addIndexEntry(index, value, zipCode, exact) {
     if (!index[value]) {
-      index[value] = [];
+      index[value] = []
     }
     index[value].push({
       zipCode,
       exact
-    });
+    })
   }
 
   function byCoordinates(latitude, longitude, numberOfResults) {
@@ -50,42 +70,11 @@ function build() {
     if (!index) {
       throw new Error("Invalid index name: " + indexName);
     }
-    if (exact) {
-      return getExactMatches(index, searchValue);
+    const allMatches = index[searchValue];
+    if (!allMatches) {
+      return []
     } else {
-      return getPartialMatches(index, searchValue);
-    }
-
-    function getExactMatches(index, searchValue) {
-      const matches = index[searchValue];
-      return matches
-        ? matches.filter(match => match.exact).map(match => match.zipCode)
-        : [];
-    }
-
-    function getPartialMatches(index, searchValue) {
-      let matches = index[searchValue];
-      if (!matches) {
-        matches = indexPartialMatches();
-      }
-      return matches.map(match => match.zipCode);
-
-      function indexPartialMatches() {
-        const exactMatchKeys = Object.keys(index).filter(
-          key => index[key].exact
-        );
-        const partialMatches = [];
-        for (const key of exactMatchKeys) {
-          if (key.includes(searchValue)) {
-            const currentPartialMatches = index[key].map(entry => {
-              return { zipCode: entry.zipCode, exact: false };
-            });
-            partialMatches.push(...currentPartialMatches);
-          }
-        }
-        index[searchValue] = partialMatches;
-        return partialMatches;
-      }
+      return allMatches.filter(match => !exact || match.exact).map(match => match.zipCode)
     }
   }
 
