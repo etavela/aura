@@ -8,12 +8,11 @@
   },
   "devDependencies": {
     "jest": "^26.0.1",
-    "prettier": "^1.19.1",
-    "standard": "^16.0.3"
+    "prettier": "^1.19.1"
   },
   "dependencies": {},
   "scripts": {
     "format:fix": "prettier --write **/*.{js,ts,md}",
-    "test": "standard && jest"
+    "test": "jest"
   }
 }
