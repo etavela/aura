@@ -1,7 +1,9 @@
-const { handler } = require("./index");
+/* eslint-env jest */
 
-describe("basic tests", () => {
-  test("handler function exists", () => {
-    expect(typeof handler).toBe("function");
-  });
-});
+const { handler } = require('./index')
+
+describe('basic tests', () => {
+  test('handler function exists', () => {
+    expect(typeof handler).toBe('function')
+  })
+})
