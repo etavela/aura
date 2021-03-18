@@ -8,7 +8,7 @@ let rest;
 
 /**
  * Search handler that responds to HTTP requests to search for zip codes.
- * 
+ *
  * @param {*} event HTTP search request
  * @returns {Array} matching zip code data objects
  */

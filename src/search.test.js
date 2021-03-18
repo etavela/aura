@@ -62,4 +62,10 @@ describe("search", () => {
       });
     });
   });
+  describe("byDistance()", () => {
+    test("should return results ordered by distance from given location", () => {
+      const result = search.byDistance(42.136749, -71.969978); // Charlton, MA
+      expect(result[0].zip).toBe("01507");
+    });
+  });
 });

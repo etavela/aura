@@ -22,7 +22,7 @@ build = service => {
 
   /**
    * Fulfills valid zip code REST requests
-   * 
+   *
    * @param {Object} request the HTTP search request
    * @returns {Array} matching zip code data
    */
