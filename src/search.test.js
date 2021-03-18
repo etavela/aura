@@ -58,7 +58,6 @@ describe("search", () => {
 
       test("should return multiple partial matches from primary_city or acceptable_city", () => {
         const result = search.byIndex(search.CITY_INDEX, "cush", false);
-        console.log(JSON.stringify(result, null, 2));
         expect(result.length).toBe(5);
       });
     });
