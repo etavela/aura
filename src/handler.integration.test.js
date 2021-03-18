@@ -1,3 +1,4 @@
+const { BadRequestError } = require("./error");
 const { handler } = require("./index");
 
 describe("integration tests", () => {
@@ -34,7 +35,6 @@ describe("integration tests", () => {
       longitude: -71.969978
     });
     const response = await handler(request);
-    console.log(JSON.stringify(response, null, 2));
     checkForZips(
       response,
       "01507",
@@ -49,6 +49,12 @@ describe("integration tests", () => {
       "01571"
     );
   });
+
+  test("handler should throw a BadRequestError for a bad request", async () => {
+    const request = buildRequest("/no_endpoint", {});
+    await expect(handler(request)).rejects.toThrow(BadRequestError);
+  });
+
 });
 
 buildRequest = (path, body) => {

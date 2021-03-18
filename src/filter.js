@@ -1,11 +1,11 @@
-const { BadRequstError } = require("./error");
+const { BadRequestError } = require("./error");
 
 build = configuration => {
   matchesFilters = (result, filters) => {
     const keys = Object.keys(filters);
     for (const key of keys) {
       if (!configuration.SUPPORTED_FILTERS.has(key)) {
-        throw new BadRequstError("Unsupported filter " + key);
+        throw new BadRequestError("Unsupported filter " + key);
       }
       if (result[key] !== filters[key]) {
         return false;

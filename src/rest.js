@@ -1,4 +1,4 @@
-const { BadRequstError } = require("./error");
+const { BadRequestError } = require("./error");
 
 build = service => {
   handlePost = request => {
