@@ -4,6 +4,14 @@ build = (search, filter, configuration) => {
     return filter(searchResults, filters);
   };
 
+  findByLocation = (latitude, longitude, filters) => {
+    const searchResults = search.byCoordinates(latitude, longitude);
+    return filter(searchResults, filters).slice(
+      0,
+      configuration.LOCATION_RESULT_LENGTH
+    );
+  };
+
   findByZip = (value, filters) => {
     const searchResults = search.byIndex(search.ZIP_INDEX, value);
     return filter(searchResults, filters);
@@ -11,6 +19,7 @@ build = (search, filter, configuration) => {
 
   return {
     findByCity,
+    findByLocation,
     findByZip
   };
 };

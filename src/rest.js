@@ -10,7 +10,11 @@ build = service => {
     } else if (request.path === "/city") {
       return service.findByCity(body.value, body.filters);
     } else if (request.path === "/location") {
-      return service.findByLocation(body.latitude, body.longitude);
+      return service.findByLocation(
+        body.latitude,
+        body.longitude,
+        body.filters
+      );
     } else {
       throw new BadRequestError("Unsupported endpoint " + request.path);
     }

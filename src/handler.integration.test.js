@@ -27,6 +27,28 @@ describe("integration tests", () => {
     const response = await handler(request);
     checkForZips(response, "01002", "02743", "02745");
   });
+
+  test("handler should return location matches", async () => {
+    const request = buildRequest("/location", {
+      latitude: 42.136749, // Charlton, MA
+      longitude: -71.969978
+    });
+    const response = await handler(request);
+    console.log(JSON.stringify(response, null, 2));
+    checkForZips(
+      response,
+      "01507",
+      "01508",
+      "01509",
+      "01515",
+      "01537",
+      "01540",
+      "01542",
+      "01550",
+      "01566",
+      "01571"
+    );
+  });
 });
 
 buildRequest = (path, body) => {
@@ -39,6 +61,7 @@ buildRequest = (path, body) => {
 
 checkForZips = (response, ...zips) => {
   const responseZips = new Set(response.map(result => result.zip));
+  console.log(Array.from(responseZips).sort());
   expect(responseZips.size).toBe(zips.length);
   zips.forEach(zip => expect(responseZips.has(zip)).toBe(true));
 };

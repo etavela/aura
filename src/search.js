@@ -90,7 +90,7 @@ build = configuration => {
     return zipCodes
       .map(zipCode => {
         return {
-          zipCode,
+          ...zipCode,
           distance: distanceInMiles(
             zipCode.latitude,
             zipCode.longitude,
@@ -99,7 +99,7 @@ build = configuration => {
           )
         };
       })
-      .sort(result => result.distance);
+      .sort((zipCode1, zipCode2) => zipCode1.distance - zipCode2.distance);
   };
 
   /**
