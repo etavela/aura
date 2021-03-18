@@ -6,7 +6,12 @@ const filterBuilder = require("./filter");
 
 let rest;
 
-// lambda-like handler function
+/**
+ * Search handler that responds to HTTP requests to search for zip codes.
+ * 
+ * @param {*} event HTTP search request
+ * @returns {Array} matching zip code data objects
+ */
 module.exports.handler = async event => {
   if (!rest) {
     initializeRest();

@@ -3,8 +3,8 @@ const { BadRequestError } = require("./error");
 build = service => {
   handlePost = request => {
     const body = JSON.parse(request.body);
-    // Focused on making this a search service; making assumption that we do URL
-    // rewriting from something like /zip-code/search/...
+    // Focused on making this endpoint a search service only
+    // Making assumption that we do URL rewriting from something like /zip-code/search/...
     if (request.path === "/zip") {
       return service.findByZip(body.value, body.filters);
     } else if (request.path === "/city") {
@@ -20,6 +20,12 @@ build = service => {
     }
   };
 
+  /**
+   * Fulfills valid zip code REST requests
+   * 
+   * @param {Object} request the HTTP search request
+   * @returns {Array} matching zip code data
+   */
   handleRequest = request => {
     if (request.httpMethod.toUpperCase() === "POST") {
       return handlePost(request);
