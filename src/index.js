@@ -10,7 +10,7 @@ module.exports.handler = async event => {
   if (!rest) {
     initializeRest();
   }
-  return rest.handle(event);
+  return rest.handleRequest(event);
 };
 
 initializeRest = () => {

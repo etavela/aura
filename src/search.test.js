@@ -31,13 +31,35 @@ describe("search", () => {
       test("should return an exact match on primary_city", () => {
         const result = search.byIndex(search.CITY_INDEX, "Agawam", true);
         expect(result.length).toBe(1);
-        result.forEach(match => expect(match.primary_city.toBe("Agawam")));
+        const match = result[0];
+        expect(match.zip).toBe("01001");
+        expect(match.primary_city).toBe("Agawam");
       });
 
-      test("should return an exact match on primary_city or acceptable_city", () => {
+      test("should be case-insensitive", () => {
+        const result = search.byIndex(search.CITY_INDEX, "AGAwaM", true);
+        expect(result.length).toBe(1);
+        const match = result[0];
+        expect(match.primary_city).toBe("Agawam");
+      });
+
+      test("should return an exact match on acceptable_city", () => {
+        const result = search.byIndex(search.CITY_INDEX, "Willimansett", true);
+        expect(result.length).toBe(1);
+        const match = result[0];
+        expect(match.zip).toBe("01013");
+        expect(match.acceptable_cities).toBe("Willimansett");
+      });
+
+      test("should return multiple exact matches from primary_city or acceptable_city", () => {
         const result = search.byIndex(search.CITY_INDEX, "Amherst", true);
+        expect(result.length).toBe(6);
+      });
+
+      test("should return multiple partial matches from primary_city or acceptable_city", () => {
+        const result = search.byIndex(search.CITY_INDEX, "cush", false);
+        console.log(JSON.stringify(result, null, 2));
         expect(result.length).toBe(5);
-        result.forEach(match => expect(match.primary_city.toBe("Amherst")));
       });
     });
   });
