@@ -5,7 +5,7 @@ build = (search, filter, configuration) => {
   };
 
   findByLocation = (latitude, longitude, filters) => {
-    const searchResults = search.byCoordinates(latitude, longitude);
+    const searchResults = search.byDistance(latitude, longitude);
     return filter(searchResults, filters).slice(
       0,
       configuration.LOCATION_RESULT_LENGTH

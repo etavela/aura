@@ -86,7 +86,7 @@ build = configuration => {
     }
   };
 
-  byCoordinates = (latitude, longitude) => {
+  byDistance = (latitude, longitude) => {
     return zipCodes
       .map(zipCode => {
         return {
@@ -127,7 +127,7 @@ build = configuration => {
   };
 
   return {
-    byCoordinates,
+    byDistance,
     byIndex,
     ZIP_INDEX,
     CITY_INDEX
