@@ -54,7 +54,6 @@ describe("integration tests", () => {
     const request = buildRequest("/no_endpoint", {});
     await expect(handler(request)).rejects.toThrow(BadRequestError);
   });
-
 });
 
 buildRequest = (path, body) => {
